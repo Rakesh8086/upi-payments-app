@@ -71,6 +71,13 @@ public class Transaction {
         return amount;
     }
 
+    public void setStatus(Status status){
+        this.status = status;
+    }
+    public Status geStatus(){
+        return status;
+    }
+
     public void setCreatedTime(LocalDateTime time){
         this.createdAt = time;
     }
