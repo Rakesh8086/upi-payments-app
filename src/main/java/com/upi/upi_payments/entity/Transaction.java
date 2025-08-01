@@ -20,6 +20,7 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "sender_wallet_id", referencedColumnName = "id")
     private Wallet senderWallet;
+    @ManyToOne
     @JoinColumn(name = "receiver_wallet_id", referencedColumnName = "id")
     private Wallet receiverWallet;
     private BigDecimal amount;

@@ -19,7 +19,7 @@ public class Wallet {
     private User user; // user Id is the foreign key in wallets table
 
     public Wallet(){
-
+        
     }
 
     public Wallet(Long id, BigDecimal balance, LocalDateTime updatedAt, User user) {

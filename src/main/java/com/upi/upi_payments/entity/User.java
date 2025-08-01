@@ -22,7 +22,7 @@ public class User{
     private Wallet wallet; // wallet is a another entity
 
     public User(){
-
+                
     }
 
     public User(long id, String userName, String phoneNumber, UserType userType, 

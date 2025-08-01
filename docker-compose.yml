@@ -1,0 +1,45 @@
+# docker-compose.yml (for upi-payments project)
+version: '3.8'
+
+services:
+  # The PostgreSQL database service for the UPI Payments app
+  upipg:
+    image: postgres:15.5-alpine
+    container_name: upi_postgresql
+    environment:
+      POSTGRES_USER: upi_user
+      POSTGRES_PASSWORD: upi_password
+      POSTGRES_DB: upi_database
+    ports:
+      # Exposing port 5432 to the host machine for direct access if needed
+      - "5432:5432"
+    volumes:
+      # Persist the database data to a named volume
+      - upi_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # This healthcheck ensures the service is ready for connections
+      test: ["CMD", "pg_isready", "-U", "upi_user", "-d", "upi_database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  # Your Spring Boot application service
+  upiapp:
+    # Use the local Dockerfile to build the application image
+    build: .
+    container_name: upi_payments_app
+    ports:
+      # Expose the application's port to the host
+      - "8080:8080"
+    environment:
+      # These environment variables will override application.properties inside the container
+      SPRING_DATASOURCE_URL: jdbc:postgresql://upipg:5432/upi_database
+      SPRING_DATASOURCE_USERNAME: upi_user
+      SPRING_DATASOURCE_PASSWORD: upi_password
+    # The application will only start after the database is confirmed to be healthy
+    depends_on:
+      upipg:
+        condition: service_healthy
+
+volumes:
+  upi_pgdata:
