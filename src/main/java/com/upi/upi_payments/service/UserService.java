@@ -4,7 +4,7 @@ import com.upi.upi_payments.entity.User;
 import com.upi.upi_payments.entity.UserType;
 import com.upi.upi_payments.entity.Wallet;
 import com.upi.upi_payments.repository.UserRepository;
-import com.upi.upi_payments.repository.WalletRepository;
+// import com.upi.upi_payments.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,31 +17,23 @@ import java.time.LocalDateTime;
 public class UserService{
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private WalletRepository walletRepository;
 
     public User registerUser(String name, String phoneNumber, UserType userType){
-        // new user object
         User user = new User();
         user.setName(name);
         user.setPhoneNumber(phoneNumber);
         user.setUserType(userType);
         user.setCreatedTime(LocalDateTime.now());
 
-        // save user to DB
-        user = userRepository.save(user);
-
-        // create Wallet object
         Wallet wallet = new Wallet();
         wallet.setBalance(new BigDecimal("0.00"));
         wallet.setUpdatedTime(LocalDateTime.now());
+
+        // Bi-directional linking
         wallet.setUser(user);
-
-        // save wallet
-        walletRepository.save(wallet);
-
-        // update user with wallet reference
         user.setWallet(wallet);
+
+        // Save only user, wallet will be saved automatically due to cascade
         return userRepository.save(user);
     }
 }
