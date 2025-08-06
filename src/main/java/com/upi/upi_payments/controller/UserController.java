@@ -3,6 +3,10 @@ package com.upi.upi_payments.controller;
 import com.upi.upi_payments.dto.UserRegistrationDTO;
 import com.upi.upi_payments.entity.User;
 import com.upi.upi_payments.service.UserService;
+
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 // notice how every layer is separated - "Separation of concerns" - easy to test, debug
 
 @RestController
+@Validated
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
-
+    // should be revisiting this function. For displaying appropriate error messages to user
     @PostMapping("/register")
-    public User registerUser(@RequestBody UserRegistrationDTO request){
+    public User registerUser(@Valid @RequestBody UserRegistrationDTO request){
         return userService.registerUser(
             request.getUserName(),
             request.getPhoneNumber(),
