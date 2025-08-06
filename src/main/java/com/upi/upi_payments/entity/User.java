@@ -14,6 +14,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
+    @Column(unique = true)
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private UserType userType;

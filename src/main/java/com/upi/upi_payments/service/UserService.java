@@ -19,6 +19,10 @@ public class UserService{
     private UserRepository userRepository;
 
     public User registerUser(String name, String phoneNumber, UserType userType){
+        if(userRepository.findByPhoneNumber(phoneNumber).isPresent()){
+            throw new RuntimeException("Phone number already registered");
+        }
+        
         User user = new User();
         user.setName(name);
         user.setPhoneNumber(phoneNumber);

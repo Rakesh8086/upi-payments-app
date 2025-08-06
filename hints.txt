@@ -1,0 +1,12 @@
+1) Creating new Database:
+Change database name in docker-compose and application.properties
+run docker exec -it upi_postgresql psql -U upi_user -d postgres
+run CREATE DATABASE <Database name> OWNER upi_user;
+
+2) Adding dependency:
+Add it in pom.xml
+run mvn clean package
+run docker-compose up --build
+
+3) Clean and restart Docker Compose: Deletes the container and its volume(database)
+docker-compose down -v
