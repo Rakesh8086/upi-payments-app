@@ -17,17 +17,26 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "sender_wallet_id", referencedColumnName = "id")
     private Wallet senderWallet;
+
     @ManyToOne
     @JoinColumn(name = "receiver_wallet_id", referencedColumnName = "id")
     private Wallet receiverWallet;
-    private BigDecimal amount;
+
+    private BigDecimal transferAmount;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
     private LocalDateTime createdAt;
+
     private String remarks;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 
     public Transaction(){
 
@@ -38,7 +47,7 @@ public class Transaction {
         this.id = id;
         this.senderWallet = sender;
         this.receiverWallet = receiver;
-        this.amount = amount;
+        this.transferAmount = amount;
         this.status = status;
         this.createdAt = createdTime;
         this.remarks = remark;
@@ -66,23 +75,23 @@ public class Transaction {
     }
 
     public void setTransferAmount(BigDecimal amount){
-        this.amount = amount;
+        this.transferAmount = amount;
     }
     public BigDecimal getTransferAmount(){
-        return amount;
+        return transferAmount;
     }
 
     public void setStatus(Status status){
         this.status = status;
     }
-    public Status geStatus(){
+    public Status getStatus(){
         return status;
     }
 
-    public void setCreatedTime(LocalDateTime time){
+    public void setCreatedAt(LocalDateTime time){
         this.createdAt = time;
     }
-    public LocalDateTime getCreatedTime(){
+    public LocalDateTime getCreatedAt(){
         return createdAt;
     }
 
@@ -91,5 +100,12 @@ public class Transaction {
     }
     public String getRemarks(){
         return remarks;
+    }
+
+    public void setTransactionType(TransactionType type){
+        this.transactionType = type;
+    }
+    public TransactionType getTransactionType(){
+        return transactionType;
     }
 };

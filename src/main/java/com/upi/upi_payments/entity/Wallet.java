@@ -50,11 +50,11 @@ public class Wallet {
         }
     }
 
-    public LocalDateTime getUpdatedTime(){
+    public LocalDateTime getUpdatedAt(){
         return updatedAt;
     }
 
-    public void setUpdatedTime(LocalDateTime time){
+    public void setUpdatedAt(LocalDateTime time){
         updatedAt = time;
     }
 

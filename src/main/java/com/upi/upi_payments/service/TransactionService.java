@@ -26,15 +26,15 @@ public class TransactionService {
         transaction.setSenderWallet(sender);
         transaction.setReceiverWallet(receiver);
         transaction.setTransferAmount(amount);
-        transaction.setCreatedTime(LocalDateTime.now());
+        transaction.setCreatedAt(LocalDateTime.now());
         transaction.setRemarks(remarks);
 
         if(sender.getBalance().compareTo(amount) >= 0){
             // Update balances
             sender.setBalance(sender.getBalance().subtract(amount));
             receiver.setBalance(receiver.getBalance().add(amount));
-            sender.setUpdatedTime(LocalDateTime.now());
-            receiver.setUpdatedTime(LocalDateTime.now());
+            sender.setUpdatedAt(LocalDateTime.now());
+            receiver.setUpdatedAt(LocalDateTime.now());
 
             // Save updated wallets
             walletRepository.save(sender);

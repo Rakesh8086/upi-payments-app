@@ -31,7 +31,7 @@ public class UserService{
 
         Wallet wallet = new Wallet();
         wallet.setBalance(new BigDecimal("0.00"));
-        wallet.setUpdatedTime(LocalDateTime.now());
+        wallet.setUpdatedAt(LocalDateTime.now());
 
         // Bi-directional linking
         wallet.setUser(user);
