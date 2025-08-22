@@ -1,6 +1,7 @@
 package com.upi.upi_payments.service;
 
 import com.upi.upi_payments.entity.Transaction;
+import com.upi.upi_payments.entity.TransactionType;
 import com.upi.upi_payments.entity.User;
 import com.upi.upi_payments.entity.Wallet;
 import com.upi.upi_payments.entity.Status;
@@ -49,6 +50,7 @@ public class TransferService {
         transaction.setReceiverWallet(receiverWallet);
         transaction.setTransferAmount(amount);
         transaction.setCreatedAt(LocalDateTime.now());
+        transaction.setTransactionType(TransactionType.TRANSFER);
 
         // Check balance
         if(senderWallet.getBalance().compareTo(amount) < 0){

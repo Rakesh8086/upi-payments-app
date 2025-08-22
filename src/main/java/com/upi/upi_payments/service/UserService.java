@@ -24,10 +24,10 @@ public class UserService{
         }
         
         User user = new User();
-        user.setName(name);
+        user.setUserName(name);
         user.setPhoneNumber(phoneNumber);
         user.setUserType(userType);
-        user.setCreatedTime(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
 
         Wallet wallet = new Wallet();
         wallet.setBalance(new BigDecimal("0.00"));
