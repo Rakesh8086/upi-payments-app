@@ -20,12 +20,17 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String userName;
+
     @Column(unique = true)
     private String phoneNumber;
+
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
     private LocalDateTime createdAt;
+    
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet; // wallet is a another entity
 };
