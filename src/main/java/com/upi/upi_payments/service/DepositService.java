@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.upi.upi_payments.entity.Status;
 import com.upi.upi_payments.entity.Transaction;
 import com.upi.upi_payments.entity.TransactionType;
 import com.upi.upi_payments.entity.User;
@@ -43,6 +44,7 @@ public class DepositService {
         transaction.setTransferAmount(amount);
         transaction.setTransactionType(TransactionType.DEPOSIT);
         transaction.setCreatedAt(LocalDateTime.now());
+        transaction.setStatus(Status.SUCCESS);
 
         return transactionRepository.save(transaction);
     }

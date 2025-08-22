@@ -3,16 +3,21 @@ package com.upi.upi_payments.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-// A foreign key is a column or set of columns in a database table 
-// that refers to the primary key of another table
-
-// @SuppressWarnings("unused") can comment it finally once all variables are used
-// Use this just for convenience of not seeing warning signals
+import lombok.Data; 
 
 @Entity
 @Table(name = "transactions")
+@Data 
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,74 +43,4 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    public Transaction(){
-
-    }
-
-    public Transaction(Long id, Wallet sender, Wallet receiver, BigDecimal amount,
-    Status status, LocalDateTime createdTime, String remark, User user){
-        this.id = id;
-        this.senderWallet = sender;
-        this.receiverWallet = receiver;
-        this.transferAmount = amount;
-        this.status = status;
-        this.createdAt = createdTime;
-        this.remarks = remark;
-    }
-
-    public void setId(Long Id){
-        id = Id;
-    }
-    public Long getId(){
-        return id;
-    }
-
-    public void setSenderWallet(Wallet sender){
-        this.senderWallet = sender;
-    }
-    public Wallet getSenderWallet(){
-        return senderWallet;
-    }
-
-    public void setReceiverWallet(Wallet receiver){
-        this.receiverWallet = receiver;
-    }
-    public Wallet getReceiverWallet(){
-        return receiverWallet;
-    }
-
-    public void setTransferAmount(BigDecimal amount){
-        this.transferAmount = amount;
-    }
-    public BigDecimal getTransferAmount(){
-        return transferAmount;
-    }
-
-    public void setStatus(Status status){
-        this.status = status;
-    }
-    public Status getStatus(){
-        return status;
-    }
-
-    public void setCreatedAt(LocalDateTime time){
-        this.createdAt = time;
-    }
-    public LocalDateTime getCreatedAt(){
-        return createdAt;
-    }
-
-    public void setRemarks(String remark){
-        this.remarks = remark;
-    }
-    public String getRemarks(){
-        return remarks;
-    }
-
-    public void setTransactionType(TransactionType type){
-        this.transactionType = type;
-    }
-    public TransactionType getTransactionType(){
-        return transactionType;
-    }
-};
+}
