@@ -30,6 +30,8 @@ public class User{
     private UserType userType;
 
     private LocalDateTime createdAt;
+
+    private String password;
     
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet; // wallet is a another entity
