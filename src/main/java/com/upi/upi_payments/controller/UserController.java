@@ -1,5 +1,7 @@
 package com.upi.upi_payments.controller;
 
+import com.upi.upi_payments.dto.LoginRequestDTO;
+import com.upi.upi_payments.dto.LoginResponseDTO;
 import com.upi.upi_payments.dto.RegistrationRequestDTO;
 import com.upi.upi_payments.service.UserService;
 
@@ -25,5 +27,12 @@ public class UserController {
         userService.registerUser(request);
         
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> loginUser(@Valid @RequestBody LoginRequestDTO request) {
+        LoginResponseDTO resp = userService.loginUser(request);
+        
+        return ResponseEntity.ok(resp);
     }
 }
