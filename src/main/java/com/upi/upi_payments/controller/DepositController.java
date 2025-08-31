@@ -24,7 +24,6 @@ public class DepositController {
             @Valid @RequestBody DepositRequestDTO request){
         
         Transaction transaction = depositService.deposit(
-            request.getPhoneNumber(), 
             request.getAmount()
         );
         

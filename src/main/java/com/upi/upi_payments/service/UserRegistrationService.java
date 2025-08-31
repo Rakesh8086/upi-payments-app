@@ -33,14 +33,19 @@ public class UserRegistrationService {
         user.setUserType(request.getUserType());
         user.setCreatedAt(LocalDateTime.now());
         
+        // System.out.println("Plain Text Password Before Hashing: " + request.getPassword());
+        // System.out.println("Plain Text User Key Before Hashing: " + request.getUserProvidedKey());
+        
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setUserProvidedKey(passwordEncoder.encode(request.getUserProvidedKey()));
+        
+        // System.out.println("Hashed Password: " + user.getPassword());
+        // System.out.println("Hashed User Key: " + user.getUserProvidedKey());
         
         Wallet wallet = new Wallet();
         wallet.setBalance(new BigDecimal("0.00"));
         wallet.setUpdatedAt(LocalDateTime.now());
         
-        // Bi-directional linking
         wallet.setUser(user);
         user.setWallet(wallet);
 

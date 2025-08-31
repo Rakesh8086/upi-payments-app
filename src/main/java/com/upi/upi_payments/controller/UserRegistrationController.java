@@ -7,7 +7,6 @@ import com.upi.upi_payments.service.UserRegistrationService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,10 @@ public class UserRegistrationController {
     private UserRegistrationService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody RegistrationRequestDTO request){
-        User user = userService.registerUser(request);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    public ResponseEntity<User> registerUser(@Valid @RequestBody RegistrationRequestDTO request) {
+        // System.out.println("-----> REGISTER ENDPOINT HIT <-----");
+        // System.out.println("Received Registration Request for Phone: " + request.getPhoneNumber());
+        User registeredUser = userService.registerUser(request);
+        return ResponseEntity.ok(registeredUser);
     }
 }

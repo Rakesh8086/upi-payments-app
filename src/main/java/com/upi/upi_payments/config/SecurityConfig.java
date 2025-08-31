@@ -9,31 +9,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.upi.upi_payments.filter.ApiKeyFilter;
 import com.upi.upi_payments.repository.UserRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
-    // Autowire the filter's dependencies here, not the filter itself
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Instantiate the filter and pass in its dependencies via the constructor
-        ApiKeyFilter apiKeyFilter = new ApiKeyFilter(userRepository, passwordEncoder());
-
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/auth/login", "/api/users/register").permitAll()
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(apiKeyFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -41,5 +38,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public ApiKeyFilter apiKeyFilter() {
+        return new ApiKeyFilter(userRepository, passwordEncoder());
     }
 }

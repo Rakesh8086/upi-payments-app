@@ -19,8 +19,10 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody LoginRequestDTO request) {
+        // System.out.println("-----> LOGIN ENDPOINT HIT <-----");
+        // System.out.println("Received Login Request for Phone: " + request.getPhoneNumber());
         String userProvidedKey = authenticationService.login(request);
-
+        // System.out.println("Login Successful. Returning user provided key.");
         return ResponseEntity.ok(userProvidedKey);
     }
 }
