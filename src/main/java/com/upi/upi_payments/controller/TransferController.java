@@ -25,7 +25,6 @@ public class TransferController {
             @Valid @RequestBody TransferRequestDTO request){
         
         Transaction transaction = transferService.performTransaction(
-            request.getSenderPhoneNumber(),
             request.getReceiverPhoneNumber(),
             request.getAmount()
         );

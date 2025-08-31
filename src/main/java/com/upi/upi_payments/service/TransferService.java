@@ -13,6 +13,8 @@ import com.upi.upi_payments.repository.TransactionRepository;
 import com.upi.upi_payments.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,11 +34,15 @@ public class TransferService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Transaction performTransaction(String senderPhoneNumber, String receiverPhoneNumber, 
+    public Transaction performTransaction(String receiverPhoneNumber, 
     BigDecimal amount){
-        User sender = userRepository.findByPhoneNumber(senderPhoneNumber)
+        // Retrieve the authenticated user's phone number from the security context
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String phoneNumber = userDetails.getUsername();
+
+        User sender = userRepository.findByPhoneNumber(phoneNumber)
             .orElseThrow(() -> 
-                new IllegalArgumentException("Sender not found with phone number: " + senderPhoneNumber));
+                new IllegalArgumentException("Sender not found with phone number: " + phoneNumber));
 
         User receiver = userRepository.findByPhoneNumber(receiverPhoneNumber)
             .orElseThrow(() -> 
